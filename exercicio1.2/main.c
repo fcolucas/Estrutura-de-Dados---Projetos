@@ -1,37 +1,91 @@
 #include <stdio.h>
 #include <stdlib.h>
-int x[6], y[6], w[6], i=0, j, k, num, aux=0, sec=0 ;
+#define tam 6
+
+void entre_10_40(int *x, int *y, int len, int *aux){
+    int i=0;
+    for(i=0; i<len; i++){
+        if((10<x[i]) && (x[i]<40)){
+            y[*aux]=x[i];
+            *aux+=1;
+        }
+    }
+}
+
+void posicao_par(int *x, int *w, int len, int *sec){
+    int i=0;
+    for(i=0; i<len; i+=2){
+        w[*sec]=x[i];
+        *sec+=1;
+    }
+}
+
+void imprime_vetor(int *vet, int len){
+    int i=0;
+    printf("{ ");
+    for(i=0; i<len; i++){
+        printf("%d ", vet[i]);
+    }
+    printf("}\n");
+}
+
+int busca(int *vet, int len, int val){
+   int i=0;
+   for(i=0; i<len; i++){
+        if(vet[i]==val){
+            return 1;
+        }
+   }
+   return 0;
+}
+
+int maior_elem(int *x, int len){
+    int i=0, maior=x[i];
+    for(i=0; i<len; i++){
+        if(x[i]>maior) maior=x[i];
+    }
+    return maior;
+}
+
+int menor_elem(int *x, int len){
+    int i=0, menor=x[i];
+    for(i=0; i<len; i++){
+        if(x[i]<menor) menor=x[i];
+    }
+    return menor;
+}
+
 int main()
 {
+    int x[tam], y[tam], w[tam], i=0, num, aux=0, sec=0 ;
     do{
         printf("Digite um numero: ");
         scanf("%d", &num);
         x[i]=num;
         i++;
-    }while(i<6);
+    }while(i<tam);
 
-    while(k<6){
-        if((x[k]>10) && (x[k]<40)){
-            aux++;
-            y[aux-1]=x[k];
-        }
-    k++;
+    entre_10_40(x, y, tam, &aux);
+
+    posicao_par(x, w, tam, &sec);
+
+    printf("Vetor X:");
+    imprime_vetor(x, tam);
+
+    printf("Vetor Y de numeros entre 10 e 40:");
+    imprime_vetor(y, aux);
+
+    printf("Vetor W:");
+    imprime_vetor(w, sec);
+
+    printf("Maior elemento de X: %d // Menor elemento de X: %d \n", maior_elem(x, tam), menor_elem(x, tam));
+
+    printf("Procure um numero: ");
+    scanf("%d", &num);
+    if(busca(x, tam, num)){
+        printf("Numero encontrado!\n");
     }
-
-    while(k<6){
-        if(x[k]%2==0){
-            sec++;
-            w[sec-1]=x[k];
-        }
-    k++;
-    }
-
-//    printf("Vetor Y de numeros entre 10 e 40: {");
-    for(i=0;i<6;i++){
-        printf("%d, ", w[i]);
-    }
-    //printf("}");
-
+    else printf("Numero nao encontrado!\n");
 
     return 0;
 
