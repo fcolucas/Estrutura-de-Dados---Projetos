@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define tam 6
+/*
+2. Leia um vetor X de N elementos e que:
+ Crie outro vetor Y contendo os elementos de X que estão na faixa entre 10 e 40;
+ Crie outro vetor W contendo os números que estão nas posições pares;
+ Pesquise a existência de um determinado elemento Z no vetor X;
+ Escreva o menor e maior elemento do vetor X.
+*/
+
 
 void entre_10_40(int *x, int *y, int len, int *aux){
     int i=0;
