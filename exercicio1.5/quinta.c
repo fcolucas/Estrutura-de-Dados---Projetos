@@ -50,19 +50,7 @@ int busca_binaria(int *vet, int len, int val){ //Busca Binária
     return 0;
 }
 
-int verif_repetido(int *vet, int len){ //Verifica se há numero repetido
-    int i=0, j=0, repete=0;
-    for(i=0; i<len-1; i++){
-        for(j=i+1; j<len; j++){
-            if(vet[i]==vet[j]){
-                repete++;
-            }
-        }
-    }
-    return repete;
-}
-
-void novo_vetor(int *vet, int *len){ // Reorganiza o vetor
+void novo_vetor(int *vet, int *len){ // Retirando numeros repetidos
     int i=0, j=0;
     for(i=0; i<*len-1; i++){
         for(j=i+1; j<*len; j++){
@@ -76,7 +64,7 @@ void novo_vetor(int *vet, int *len){ // Reorganiza o vetor
 
 int main()
 {
-    int tam=6, vetor[tam], nvetor[tam], aux=0, num, i=0;
+    int tam=6, vetor[tam], nvetor[tam], aux=0, num, i=0, tam2=tam;
     do{ //Criando vetor
         printf("Digite um numero: ");
         scanf("%d", &num);
@@ -90,8 +78,11 @@ int main()
     printf("Vetor: ");
     imprime_vetor(vetor, tam);
 
-    printf("Repeticoes: %d repeticao\n", verif_repetido(vetor, tam));
     novo_vetor(vetor, &tam);
+    if(tam!=tam2){
+        printf("Repeticoes: %d repeticao\n", tam2-tam);
+    }
+    else printf("OK!");
 
     ordena(vetor, tam);
     printf("Novo vetor: ");
