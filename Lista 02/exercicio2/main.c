@@ -7,7 +7,7 @@ struct rgFuncionarios{
     char sexo;
     int qt_pecas;
 };
-
+//registrando funcionários
 void reg_funcionario(struct rgFuncionarios *fun, int len){
     int i=0;
     for(i=0; i<len; i++){
@@ -26,6 +26,7 @@ void reg_funcionario(struct rgFuncionarios *fun, int len){
     }
 }
 
+//calculando peças produzidas por sexo
 int pecas_sexo(struct rgFuncionarios *fun, int len, int sexo){
     int i=0, tpecas=0;
     for(i=0; i<len; i++){
@@ -34,11 +35,12 @@ int pecas_sexo(struct rgFuncionarios *fun, int len, int sexo){
     return tpecas;
 }
 
+//retornando funcionario com maior produção
 char* funcionario_mes(struct rgFuncionarios *fun, int len){
     int i=0, j=0;
     for(i=0; i<len; i++){
         if(fun[i].qt_pecas>fun[j].qt_pecas) {
-                i=j;
+                j=i;
         }
     }
     return fun[j].nome;
@@ -46,7 +48,7 @@ char* funcionario_mes(struct rgFuncionarios *fun, int len){
 
 int main()
 {
-    setlocale(LC_ALL, "");
+    setlocale(LC_ALL, ""); //adaptação do programa ao idioma desejado
 
     int f=6;
     struct rgFuncionarios Funcionarios[f];
