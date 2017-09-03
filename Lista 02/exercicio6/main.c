@@ -89,6 +89,7 @@ int main()
                 else{
                     printf("Digite o nome a ser pesquisado: ");
                     scanf("%s", nome);
+                    fflush(stdin);
                     n = pesquisa(Agenda, nome, contatos);
 
                     if(n == -1){
@@ -146,7 +147,6 @@ int main()
                 break;
         }
     } while (menu);
-
 
     return 0;
 }
