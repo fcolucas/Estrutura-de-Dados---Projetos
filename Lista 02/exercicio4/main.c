@@ -14,7 +14,6 @@ int main()
     for(i=0; i<5; i++){
         printf("Nome do Aluno: ");
         gets(Aluno[i].nome);
-        fflush(stdin);
 
         printf("AP1: ");
         scanf("%f", &Aluno[i].notas[0]);
@@ -24,6 +23,8 @@ int main()
 
         printf("AV.FINAL: ");
         scanf("%f", &Aluno[i].notas[2]);
+
+        fflush(stdin);
     }
 
     printf("\n -----REGISTRO DE ALUNOS----- \n \n");
