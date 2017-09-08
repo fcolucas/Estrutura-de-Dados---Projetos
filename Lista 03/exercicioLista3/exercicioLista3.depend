@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1504838987 source:c:\users\usuario1\documents\estrutura-de-dados---projetos\exerciciolista3\main.c
+	<stdio.h>
+	<stdlib.h>
+
