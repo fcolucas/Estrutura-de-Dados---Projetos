@@ -2,43 +2,56 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#define TRUE 1
 #define TAM 20
 
-
-typedef struct node{
+typedef struct Item{
     char valor;
-    struct node *prox;
-}Node;
+    struct Item *prox;
+}Item;
 
-int vaziaP (Node *pilha){ //verifica se a pilha está vazia
-    if(pilha->prox == NULL){
-            return 1;}
-    else {
-            return 0;}
+typedef struct TipoPilha{
+    Item *topo;
+}Pilha;
+
+void FazPilhaVazia(Pilha *pilha){
+    pilha->topo = (Item *)malloc(sizeof(Item));
+    pilha->topo->prox = NULL;
 }
 
-void empilha(Node *pilha, char valor){ //empilha valores na pilha
-    Node *topo = (Node *)malloc(sizeof(Node));
-    topo->valor = valor;
-    topo->prox = pilha->prox;
-    pilha->prox = topo;
+int PilhaVazia (Pilha *pilha) {
+    if (pilha->topo->prox == NULL) return 1;
+    else return 0;
 }
 
-char desempilha(Node *pilha){ //desempilha o valor topo da pilha
-    Node *x;
-    int valor;
-    if(pilha->prox != NULL){
-        x = pilha->prox;
-        valor = x->valor;
-        pilha->prox = x->prox;
-        free(x);
+void empilha(Pilha *pilha, char v){
+    Item *novo = (Item *)malloc(sizeof(Item));
+    novo->valor = v;
+    novo->prox = pilha->topo->prox;
+    pilha->topo->prox = novo;
+}
+
+char desempilha(Pilha *pilha){
+    Item *aux;
+    char valor;
+    if(PilhaVazia(pilha) == 0){
+        aux = pilha->topo->prox;
+        valor = aux->valor;
+        aux->prox = aux->prox;
+        free(aux);
     }
     return valor;
 }
 
-char topoP (Node *pilha){
-    return pilha->prox->valor;
+void imprime(Pilha *pilha){
+    if(PilhaVazia(pilha) == 0){
+        while(pilha->topo->prox != NULL){
+            printf("%c", desempilha(pilha));
+        }
+    }
+}
+/*
+char topoPilha (Pilha *pilha){
+    return pilha->topo->valor;
 }
 
 int prioridade (char op){
@@ -59,54 +72,50 @@ void mostra_vetor (char *vet, int tam){
     printf("]");
 }
 
-void empilha_expressao(char *exp, int tam, char exp2[tam]){
-    int i, num=0, j=0;
+void empilha_expressao(char *exp, int tam, char *retorno){
+    int i=0, j=0;
     char c;
-    Node *pilha = NULL;
+    Pilha pilha;
 
-    for(i=0; TRUE; i++){
+    do{
         c = exp[i];
         if(isdigit(c)){
-            num = c-'0' + num*10;
+            retorno[j] = c;
+            j++;
         }
         else{
-            if(num){
-                exp2[j] = num; j++;
-                num = 0;
-            }
             if(c!='\0'){
                     if(exp[i]=='('){
-                        empilha(pilha, exp[i]);
+                        empilha(&pilha, exp[i]);
                     }
                     else if(exp[i]=='+' || exp[i]=='-' || exp[i]=='*' || exp[i]=='/'){
-                        while(vaziaP(pilha)==0 || prioridade(topoP(pilha)) >= prioridade(exp[i])){
-                            exp2[j] = desempilha(pilha);
+                        while(PilhaVazia(&pilha)==0 && prioridade(topoPilha(&pilha)) >= prioridade(exp[i])){
+                            retorno[j] = desempilha(&pilha);
                             j++;
                         }
-                        empilha(pilha, exp[i]);
+                        empilha(&pilha, exp[i]);
                     }
                     else{
-                        while(topoP(pilha)!='('){
-                            exp2[j] = desempilha(pilha);
+                        while(topoPilha(&pilha)!='('){
+                            retorno[j] = desempilha(&pilha);
                             j++;
                         }
                     }
                 }
-            else{
-                break;
-                }
             }
-        }
+            i++;
+        }while(exp[i]!='\0');
 }
-
+*/
 int main()
 {
-    Node *pilha = (Node *)malloc(sizeof(Node));
-    pilha->prox = NULL;
-
-    char exp2[TAM];
-    char s[TAM] = "3+6-7*8";
-    empilha_expressao(s, TAM, exp2);
-    mostra_vetor(exp2, TAM);
+    Pilha *p;
+    /*
+    char exp[TAM] = "4*4", retorno[TAM];
+    empilha_expressao(exp, TAM, retorno);
+    mostra_vetor(retorno, TAM);
+    */
+    empilha(p, 'C');
+    imprime(p);
     return 0;
 }
