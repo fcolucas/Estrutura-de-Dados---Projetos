@@ -5,7 +5,7 @@
 #define TAM 20
 
 typedef struct Item{
-    char valor;
+    int valor;
     struct Item *prox;
 }Item;
 
@@ -23,16 +23,16 @@ int PilhaVazia (Pilha *pilha) {
     else return 0;
 }
 
-void empilha(Pilha *pilha, char v){
+void empilha(Pilha *pilha, int v){
     Item *novo = (Item *)malloc(sizeof(Item));
     novo->valor = v;
     novo->prox = pilha->topo;
     pilha->topo = novo;
 }
 
-char desempilha(Pilha *pilha){
+int desempilha(Pilha *pilha){
     Item *aux;
-    char valor;
+    int valor;
     if(PilhaVazia(pilha) == 0){
         aux = pilha->topo;
         valor = aux->valor;
@@ -44,14 +44,39 @@ char desempilha(Pilha *pilha){
 
 void imprime(Pilha *pilha){
     if(PilhaVazia(pilha) == 0){
-        while(pilha->topo != NULL){
+        while(pilha->topo->prox != NULL){
             printf("%c", desempilha(pilha));
         }
     }
 }
-/*
+
 char topoPilha (Pilha *pilha){
     return pilha->topo->valor;
+}
+
+char opera (Pilha *op, Pilha *num){
+    int num1 = atoi(desempilha(num));
+    int num2 = atoi(desempilha(num));
+    char oper = desempilha(op);
+    int res;
+    switch(oper){
+        case '+':
+            res = num1 + num2;
+            empilha(num, res);
+            break;
+        case '-':
+            res = num1 - num2;
+            empilha(num, res);
+            break;
+        case '*':
+            res = num1 * num2;
+            empilha(num, res);
+            break;
+        case '/':
+            res = num1 / num2;
+            empilha(num, res);
+            break;
+    }
 }
 
 int prioridade (char op){
@@ -75,48 +100,51 @@ void mostra_vetor (char *vet, int tam){
 void empilha_expressao(char *exp, int tam, char *retorno){
     int i=0, j=0;
     char c;
-    Pilha pilha;
+    Pilha *op = NULL, *num = NULL;
 
     do{
         c = exp[i];
         if(isdigit(c)){
-            retorno[j] = c;
-            j++;
+            empilha(num, c);
         }
         else{
             if(c!='\0'){
-                    if(exp[i]=='('){
-                        empilha(&pilha, exp[i]);
+                    if(c=='('){
+                        empilha(op, c);
                     }
                     else if(exp[i]=='+' || exp[i]=='-' || exp[i]=='*' || exp[i]=='/'){
-                        while(PilhaVazia(&pilha)==0 && prioridade(topoPilha(&pilha)) >= prioridade(exp[i])){
-                            retorno[j] = desempilha(&pilha);
+                        while(PilhaVazia(op)==0 && prioridade(topoPilha(op)) >= prioridade(exp[i])){
+                            retorno[j] = desempilha(op);
                             j++;
                         }
-                        empilha(&pilha, exp[i]);
+                        empilha(op, exp[i]);
                     }
                     else{
-                        while(topoPilha(&pilha)!='('){
-                            retorno[j] = desempilha(&pilha);
+                        while(topoPilha(op)!='('){
+                            retorno[j] = desempilha(op);
                             j++;
                         }
+                        desempilha(op);
                     }
                 }
             }
             i++;
         }while(exp[i]!='\0');
 }
-*/
+
 int main()
 {
     Pilha p;
-    /*
+    FazPilhaVazia(&p);
+
     char exp[TAM] = "4*4", retorno[TAM];
     empilha_expressao(exp, TAM, retorno);
     mostra_vetor(retorno, TAM);
-    */
+    /*
+    FazPilhaVazia(&p);
     empilha(&p, 'C');
     imprime(&p);
+    */
     return 0;
 }
 
