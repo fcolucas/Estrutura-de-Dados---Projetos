@@ -19,24 +19,24 @@ void FazPilhaVazia(Pilha *pilha){
 }
 
 int PilhaVazia (Pilha *pilha) {
-    if (pilha->topo->prox == NULL) return 1;
+    if (pilha->topo == NULL) return 1;
     else return 0;
 }
 
 void empilha(Pilha *pilha, char v){
     Item *novo = (Item *)malloc(sizeof(Item));
     novo->valor = v;
-    novo->prox = pilha->topo->prox;
-    pilha->topo->prox = novo;
+    novo->prox = pilha->topo;
+    pilha->topo = novo;
 }
 
 char desempilha(Pilha *pilha){
     Item *aux;
     char valor;
     if(PilhaVazia(pilha) == 0){
-        aux = pilha->topo->prox;
+        aux = pilha->topo;
         valor = aux->valor;
-        aux->prox = aux->prox;
+        pilha->topo = pilha->topo->prox;
         free(aux);
     }
     return valor;
@@ -44,7 +44,7 @@ char desempilha(Pilha *pilha){
 
 void imprime(Pilha *pilha){
     if(PilhaVazia(pilha) == 0){
-        while(pilha->topo->prox != NULL){
+        while(pilha->topo != NULL){
             printf("%c", desempilha(pilha));
         }
     }
@@ -109,13 +109,14 @@ void empilha_expressao(char *exp, int tam, char *retorno){
 */
 int main()
 {
-    Pilha *p;
+    Pilha p;
     /*
     char exp[TAM] = "4*4", retorno[TAM];
     empilha_expressao(exp, TAM, retorno);
     mostra_vetor(retorno, TAM);
     */
-    empilha(p, 'C');
-    imprime(p);
+    empilha(&p, 'C');
+    imprime(&p);
     return 0;
 }
+
