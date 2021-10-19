@@ -14,13 +14,13 @@ typedef struct{
     int topo;
 }Pilha;
 
-void Push(Pilha* pilha,char item){
+void Push(Pilha* pilha, char item){
     if(pilha->topo == Tamanho_Maximo){
         printf("ERRO! Pilha esta cheia!");
         return;
     }
     pilha->topo++;
-    pilha->conteudo[pilha->topo - 1] = item;
+    pilha->conteudo[pilha -> topo - 1] = item;
 }
 
 char Pop(Pilha* pilha){
@@ -28,7 +28,7 @@ char Pop(Pilha* pilha){
         printf("ERRO! Pilha esta vazia!");
         return '\0';
     }
-    return pilha->conteudo[pilha->topo];
+    return pilha->conteudo[pilha -> topo];
 }
 
 void MostrarPilha(Pilha* pilha){
@@ -121,7 +121,7 @@ int PosicaoPenultimoNumero(char* expressao){
 }
 
 int ResolverExpressaoCompletaSimples(char* expressao){
-    printf("\nExpress„o a ser resolvida: %s\n",expressao);
+    printf("\nExpress√£o a ser resolvida: %s\n",expressao);
     int i,p_op = PosicaoPenultimoNumero(expressao);
     Pilha p;
     p.topo = 0;
@@ -183,8 +183,8 @@ char* EncontrarSubExpressao(char* expressao, int* inicio, int* fim){
 int ResolverExpressaoCompletaComposta(char* expressao){
     if(ExisteParenteses(expressao)){
         int inicio, fim,i,j;
-        char* saida_parcial = EncontrarSubExpressao(expressao,&inicio,&fim);//Express„o entre parenteses
-        int saida_parcial_resolvida = ResolverExpressaoCompletaSimples(saida_parcial); //Resultado da express„o
+        char* saida_parcial = EncontrarSubExpressao(expressao,&inicio,&fim);//Express√£o entre parenteses
+        int saida_parcial_resolvida = ResolverExpressaoCompletaSimples(saida_parcial); //Resultado da express√£o
         char* nova_expressao_parcial;
         int tamanho = ((int)log10(abs(saida_parcial_resolvida)) + 2);
         if(saida_parcial_resolvida < 0){
@@ -200,7 +200,7 @@ int ResolverExpressaoCompletaComposta(char* expressao){
             nova_expressao[i] = expressao[i];
         }
         nova_expressao[i] = '\0';
-        strcat(nova_expressao,nova_expressao_parcial); //ConcatenaÁ„o
+        strcat(nova_expressao,nova_expressao_parcial); //Concatena√ß√£o
         j = strlen(nova_expressao);
         for(i = fim + 1; i < strlen(expressao); i++){
             nova_expressao[j] = expressao[i];
@@ -222,8 +222,8 @@ int main(int narg, char* argv[]){
     Pilha pilha;
     pilha.topo = 0;
 
-    printf("\n ---- CALCULADORA DE EXPRESS’ES NUM…RICAS ---- \n");
-    printf("Digite a express„o: ");
+    printf("\n ---- CALCULADORA DE EXPRESS√ïES NUM√âRICAS ---- \n");
+    printf("Digite a express√£o: ");
     fflush(stdin);
     fgets(buffer,32,stdin);
     if(buffer[strlen(buffer) - 1] == '\n'){
