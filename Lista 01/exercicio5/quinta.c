@@ -2,10 +2,10 @@
 #include <stdlib.h>
 
 /*
-5. Escreva um algoritmo que receba um vetor de N elementos e verifique a existência de
-elementos repetidos. Caso não existam elementos repetidos retorne um “Ok”. Caso
-contrário, que remova as repetições dos elementos e que retorne o número de
-elementos removidos. A seguir efetue uma pesquisa binária no vetor sem elementos
+5. Escreva um algoritmo que receba um vetor de N elementos e verifique a existï¿½ncia de
+elementos repetidos. Caso nï¿½o existam elementos repetidos retorne um ï¿½Okï¿½. Caso
+contrï¿½rio, que remova as repetiï¿½ï¿½es dos elementos e que retorne o nï¿½mero de
+elementos removidos. A seguir efetue uma pesquisa binï¿½ria no vetor sem elementos
 repetidos.
 */
 
@@ -18,21 +18,38 @@ void imprime_vetor(int *vet, int len){ //Imprime vetor
     printf("}\n");
 }
 
-void ordena (int *vet, int len){ //Ordena os números na forma crescente
-    int i=0, j, aux;
-
-    for(i=0; i<len; i++){
-        for(j=i+1; j<len; j++){
-            if(vet[i]>vet[j]){
-                aux = vet[i];
-                vet[i]=vet[j];
-                vet[j]=aux;
-            }
+void ordena(int *a, int left, int right) {
+    int i, j, x, y;
+     
+    i = left;
+    j = right;
+    x = a[(left + right) / 2];
+     
+    while(i <= j) {
+        while(a[i] < x && i < right) {
+            i++;
         }
+        while(a[j] > x && j > left) {
+            j--;
+        }
+        if(i <= j) {
+            y = a[i];
+            a[i] = a[j];
+            a[j] = y;
+            i++;
+            j--;
+        }
+    }
+     
+    if(j > left) {
+        quick_sort(a, left, j);
+    }
+    if(i < right) {
+        quick_sort(a, i, right);
     }
 }
 
-int busca_binaria(int *vet, int len, int val){ //Busca Binária
+int busca_binaria(int *vet, int len, int val){ //Busca Binï¿½ria
     int i=0, meio=len/2, maior=len-1, menor=0;
 
     while(maior>=menor){
@@ -84,7 +101,7 @@ int main()
     }
     else printf("OK!");
 
-    ordena(vetor, tam);
+    ordena(vetor, 0, tam);
     printf("Novo vetor: ");
     imprime_vetor(vetor, tam);
 
